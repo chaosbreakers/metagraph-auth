@@ -1,8 +1,10 @@
-package io.openmg.mgoauth2.configurer;
+package io.metagraph.auth.configurer;
+
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -10,20 +12,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfigurer {
 
     @Bean
     public DataSource dataSource(
-            @Value("${spring.datasource.driverClassName}") String driver,
-            @Value("${spring.datasource.url}") String url,
-            @Value("${spring.datasource.username}") String username,
-            @Value("${spring.datasource.password}") String password,
-            @Value("${spring.datasource.filters}") String filters)
-            throws SQLException {
+        @Value("${spring.datasource.driverClassName}") String driver,
+        @Value("${spring.datasource.url}") String url,
+        @Value("${spring.datasource.username}") String username,
+        @Value("${spring.datasource.password}") String password,
+        @Value("${spring.datasource.filters}") String filters)
+        throws SQLException {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(url);

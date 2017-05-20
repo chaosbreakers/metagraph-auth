@@ -1,4 +1,4 @@
-package io.openmg.mgoauth2.configurer;
+package io.metagraph.auth.configurer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,9 +29,10 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
