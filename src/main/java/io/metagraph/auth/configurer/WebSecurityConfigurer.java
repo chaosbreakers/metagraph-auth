@@ -18,12 +18,19 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
+/**
+ * @author  ZhaoPeng
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    /**
+     * 授权服务器(定义UserDetails类)
+     *
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
@@ -66,11 +73,22 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //A HttpSecurity is similar to Spring Security's XML <http> element in the namespace configuration.
         // It allows configuring web based security for specific http requests.
-        http
+       /* http
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
-                .and().httpBasic()
-                .and().csrf().disable();
+                .and().httpBasic().disable()
+                .csrf().disable();*/
+        http.authorizeRequests()
+                .antMatchers("/source/**").permitAll()
+                .antMatchers("/user/**").hasRole("USER")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
     }
 
     @Override

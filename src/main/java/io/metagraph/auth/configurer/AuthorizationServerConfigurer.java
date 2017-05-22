@@ -34,9 +34,13 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+/**
+ * @author  ZhaoPeng
+ */
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
+
     @Autowired
     private DataSource dataSource;
 

@@ -4,18 +4,22 @@ package io.metagraph.auth.configurer;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import java.sql.SQLException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
+/**
+ * @author  ZhaoPeng
+ */
 @Configuration
 public class DatabaseConfigurer {
 
@@ -62,4 +66,22 @@ public class DatabaseConfigurer {
         filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");// 忽略资源
         return filterRegistrationBean;
     }
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Bean
+    public FilterRegistrationBean filterBasicAuthenticationFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean(new BasicAuthenticationFilter(authenticationManager));
+        registration.setEnabled(false);
+        return registration;
+    }
+
+
+   /* @Bean
+    public FilterRegistrationBean da(BasicAuthenticationFilter filter1) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(filter1);
+        registration.setEnabled(false);
+        return registration;
+    }*/
 }

@@ -1,0 +1,21 @@
+--password
+http://localhost:8080/oauth/token?grant_type=password&username=admin&password=admin
+
+-- client_credentials
+http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=client_credentials&&scope=read write
+
+
+-- code
+http://localhost:8080/oauth/authorize?client_id=myClientId&redirect_uri=http://example.com&response_type=code&scope=read write
+
+
+http://localhost:8080/oauth/token?grant_type=authorization_code&redirect_uri=http://example.com&code=rNMCCD
+
+
+Implicit API
+
+http://localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://example.com
+
+http://localhost:8080/oauth/authorize?response_type=code&client_id=myClientId&redirect_uri=http://localhost:8080/auth/code
+
+
