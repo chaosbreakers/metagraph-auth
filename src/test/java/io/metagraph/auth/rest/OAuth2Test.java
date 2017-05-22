@@ -1,5 +1,6 @@
-package io.metagraph.auth;
+package io.metagraph.auth.rest;
 
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
@@ -7,25 +8,36 @@ import org.springframework.http.ResponseEntity;
 
 import static org.junit.Assert.assertEquals;
 
-public class OAuth2Test extends  BaseTest{
+/**
+ * @author ZhaoPeng
+ */
+public class OAuth2Test extends BaseTest {
+
+    @Value("${server.auth.basic.urlPrefix}")
+    protected String authBasicUrlPrefix;
 
     @Value("${server.auth.urlPrefix}")
     protected String authUrlPrefix;
-    //@Value("${server.resource.urlPrefix}")
-    //protected String resourceUrlPrefix;
 
+    @Value("${server.auth.redirectUrl}")
     protected String redirectUrl;
 
-    protected String username = "admin";
-    protected String password = "admin";
-    protected String clientId = "myClientId";
-    protected String clientSecret = "myClientSecret";
+    @Value("${server.auth.username}")
+    protected String username;
+
+    @Value("${server.auth.password}")
+    protected String password;
+
+    @Value("${server.auth.clientId}")
+    protected String clientId;
+
+    @Value("${server.auth.clientSecret}")
+    protected String clientSecret;
 
 
-    /*@Before
+    @Before
     public void setUp() {
-        redirectUrl = resourceUrlPrefix + "/secure";
-    }*/
+    }
 
     protected void unauthorizedRequest() {
         /*ResponseEntity<String> response = new TestRestTemplate().getForEntity(redirectUrl, String.class);

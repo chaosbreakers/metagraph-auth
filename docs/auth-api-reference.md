@@ -27,42 +27,27 @@ UTF-8
 
 ```json
 {
-  "error_code":40001
-  "message":"invalid credential"
+  "error":"invalid_client"
+  "error_description":"Bad client credentials"
 }
 ```
 
 错误码含义表
 
-| error_code | message                 | description                 |
-| ---------- | ----------------------- | --------------------------- |
-| 40001      | invalid credential      | 不合法的调用凭证                    |
-| 40002      | invalid grant_type      | 不合法的grant_type              |
-| 40003      | invalid access_token    | 不合法的access_token            |
-| 40004      | invalid user            | 用户名或者密码错误                   |
-| 40005      | invalid scope           | 不合法的scope                   |
-| 40006      | invalid request         | 请求不合法                       |
-| 40007      | invalid client          | client_id或client_secret参数无效 |
-| 40008      | invalid redirect_uri    | 重定向地址不匹配                    |
-| 40009      | invalid response_type   | 不合法的response_type           |
-| 40010      | invalid code            | 不合法或已过期的code                |
-| 40011      | invalid refresh_token   | 不合法的refresh_token           |
-| 40012      | invalid token_type      | 不合法的token_type              |
-| 41000      | missing access_token    | 缺失access_token参数            |
-| 41001      | missing user_info       | 缺失用户信息                      |
-| 41002      | missing grant_type      | 缺失missing参数                 |
-| 41003      | missing response_type   | 缺失response_type参数           |
-| 41004      | missing client_id       | 缺失client_id参数               |
-| 41005      | missing refresh_token   | 缺失refresh_token参数           |
-| 41006      | missing client_secret   | 缺失client_secret参数           |
-| 41007      | missing code            | 缺失code参数                    |
-| 41008      | missing redirect_uri    | 缺失redirect_uri参数            |
-| 42001      | expired access_token    | access_token超时              |
-| 42002      | expired refresh_token   | refresh_token超时             |
-| 42003      | expired code            | code超时                      |
-| 50001      | api unauthorized        | 接口未授权                       |
-| 50002      | access_denied           | 用户或授权服务器拒绝授予数据访问权限          |
-| 50001      | temporarily_unavailable | 服务暂时无法访问                    |
+| status_code | error                     | error_description      | 中文含义     |
+| ----------- | ------------------------- | ---------------------- | -------- |
+| 400         | invalid_client            | invalid_request        | 无效客户端    |
+| 400         | invalid_grant             | invalid_request        | 无效授权     |
+| 400         | invalid_request           | invalid_request        | 无效请求     |
+| 400         | invalid_scope             | invalid_request        | 无效权限范围   |
+| 400         | unsupported_grant_type    | invalid_request        | 不支持的授权类型 |
+| 400         | unsupported_response_type | invalid_request        | 不支持的响应类型 |
+| 400         | access_denied             | invalid_request        | 访问拒绝     |
+| 401         | invalid credential        | Bad client credentials | 错误的客户端凭证 |
+| 401         | unauthorized_client       | invalid_request        | 未授权的客户端  |
+| 401         | unauthorized_user         | invalid_request        | 未授权的用户   |
+|             |                           |                        |          |
+|             |                           |                        |          |
 
 
 
@@ -81,13 +66,15 @@ POST: /oauth/authorize
 **Request：**
 
 ```json
-http://localhost:8080/oauth/authorize?client_id=myClientId&redirect_uri=http://example.com&response_type=code&scope=read write
+http://username:password@localhost:8080/oauth/authorize?client_id=myClientId&redirect_uri=http://example.com&response_type=code&scope=read write
 ```
 
 **Parameter:**
 
 | 参数            | 说明                          |
 | ------------- | --------------------------- |
+| username      | 用户名，必填项                     |
+| password      | 密码，必填项                      |
 | response_type | 表示响应类型，此处的值固定为"code"，必选项。   |
 | client_id     | 表示客户端的ID，必选项。               |
 | redirect_uri  | 表示重定向的URI，可选项。              |
@@ -117,16 +104,18 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://localhost:8080/oauth/token?grant_type=authorization_code&redirect_uri=http://example.com&code=8wWZTJ
+http://localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
 ```
 
 **Parameter:**
 
-| 参数           | 说明                                      |
-| ------------ | --------------------------------------- |
-| grant_type   | 表示授权类型，此处的值固定为"authorization_code"，必选项。 |
-| redirect_uri | 表示重定向的URI，可选项。                          |
-| code         | 授权码                                     |
+| 参数            | 说明                                      |
+| ------------- | --------------------------------------- |
+| client_id     | 客户端ID，必填项                               |
+| client_secret | 客户端密钥，必填项                               |
+| grant_type    | 表示授权类型，此处的值固定为"authorization_code"，必选项。 |
+| redirect_uri  | 表示重定向的URI，可选项。                          |
+| code          | 授权码                                     |
 
 **Response:**
 
@@ -198,17 +187,19 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://localhost:8080/oauth/token?grant_type=password&username=admin&password=admin
+http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=password&username=admin&password=admin
 ```
 
 **Parameter:**
 
-| 参数         | 说明                           |
-| ---------- | ---------------------------- |
-| username   | 用户名，必填项                      |
-| password   | 密码，必填项                       |
-| grant_type | 表示授权类型，必选项，此处的值固定为"password" |
-| scope      | 表示权限范围，可选项。                  |
+| 参数            | 说明                           |
+| ------------- | ---------------------------- |
+| client_id     | 客户端ID，必填项                    |
+| client_secret | 客户端密钥，必填项                    |
+| username      | 用户名，必填项                      |
+| password      | 密码，必填项                       |
+| grant_type    | 表示授权类型，必选项，此处的值固定为"password" |
+| scope         | 表示权限范围，可选项。                  |
 
 **Response:**
 
@@ -272,3 +263,45 @@ http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSec
 | expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
 | scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。              |
 
+## 5. Refresh Token API
+
+> Refresh Token API（刷新令牌接口）：用于获取下一次访问的token
+
+**Endpoint:** 
+
+POST: /oauth/token
+
+**Request：**
+
+```json
+http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=0843fbec-20e3-4802-93a0-357488403924&client_id=myClientId&client_secret=myClientSecret
+```
+
+**Parameter:**
+
+| 参数            | 说明                                |
+| ------------- | --------------------------------- |
+| client_id     | 客户端ID，必填项                         |
+| client_secret | 客户端密钥，必填项                         |
+| grant_type    | 表示授权类型，必选项，此处的值固定为"refresh_token" |
+| refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。          |
+
+**Response:**
+
+```json
+{
+  "access_token": "d525bbd8-2aa8-402c-a4dc-b23992128801",
+  "token_type": "bearer",
+  "refresh_token": "ec64084b-11c1-4888-83d0-1c6e8c2f9e51",
+  "expires_in": 1799,
+  "scope": "read write"
+}
+```
+
+| 结果            | 说明                                       |
+| ------------- | ---------------------------------------- |
+| access_token  | 表示访问令牌，必选项。                              |
+| token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型，MAC类型相对于BEARER类型对于用户资源请求的区别在于，BEARER类型只需要携带授权服务器下发的token即可，而对于MAC类型来说，除了携带授权服务器下发的token，客户端还要携带时间戳，nonce，以及在客户端计算得到的mac值等信息，并通过这些额外的信息来保证传输的可靠性。 |
+| refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。                 |
+| expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。              |

@@ -1,4 +1,4 @@
-package io.metagraph.auth;
+package io.metagraph.auth.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -13,6 +13,9 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author ZhaoPeng
+ */
 public class ImplicitTest extends OAuth2Test {
     @Test
     public void testImplicit() throws IOException {

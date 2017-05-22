@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
@@ -29,13 +31,12 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 /**
- * @author  ZhaoPeng
+ * @author ZhaoPeng
  */
 @Configuration
 @EnableAuthorizationServer
@@ -49,9 +50,27 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')")//allow access for TokenKeyEndpoint
-                .checkTokenAccess("hasAuthority('ROLE_TRUSTED_CLIENT')");//allow access for CheckTokenEndpoint
+        //allow access for TokenKeyEndpoint
+        security.tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')")
+                //allow access for CheckTokenEndpoint
+                .checkTokenAccess("hasAuthority('ROLE_TRUSTED_CLIENT')")
+                // 允许客户端方式授权，否则默认采取Basic Authentication
+                .allowFormAuthenticationForClients()
+                .accessDeniedHandler(oauth2AccessDeniedHandler())
+                .authenticationEntryPoint(oauth2AuthenticationEntryPoint());
     }
+
+
+    @Bean
+    public OAuth2AccessDeniedHandler oauth2AccessDeniedHandler() {
+        return new OAuth2AccessDeniedHandler();
+    }
+
+    @Bean
+    public OAuth2AuthenticationEntryPoint oauth2AuthenticationEntryPoint() {
+        return new OAuth2AuthenticationEntryPoint();
+    }
+
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
