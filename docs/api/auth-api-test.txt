@@ -21,23 +21,21 @@ http://admin:admin@localhost:8080/oauth/authorize?client_id=myClientId&redirect_
 
 
 // token
-http://localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
+http://admin:admin@localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=kjsmMK
 
 
 curlªÒ»°
-curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "client_id=myClientId&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=4SoAhF"
+curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "client_id=myClientId&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=osfU69"
 
 
 
 Implicit API
 
-http://localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://example.com
-
-http://localhost:8080/oauth/authorize?response_type=code&client_id=myClientId&redirect_uri=http://localhost:8080/auth/code
+http://admin:admin@localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://example.com
 
 
 refresh_token
-http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=4c8f7938-7ecb-45ac-b649-7c87f9a01dca&client_id=myClientId&client_secret=myClientSecret
+http://admin:admin@localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=4c8f7938-7ecb-45ac-b649-7c87f9a01dca&client_id=myClientId&client_secret=myClientSecret
 
 --curl–¥∑®
 curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "grant_type=refresh_token&refresh_token=4c8f7938-7ecb-45ac-b649-7c87f9a01dca&client_id=myClientId&client_secret=myClientSecret"

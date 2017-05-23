@@ -104,13 +104,15 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
+http://username:password@localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
 ```
 
 **Parameter:**
 
 | 参数            | 说明                                      |
 | ------------- | --------------------------------------- |
+| username      | 用户名，必填项                                 |
+| password      | 密码，必填项                                  |
 | client_id     | 客户端ID，必填项                               |
 | client_secret | 客户端密钥，必填项                               |
 | grant_type    | 表示授权类型，此处的值固定为"authorization_code"，必选项。 |
@@ -148,13 +150,15 @@ POST: /oauth/authorize
 **Request：**
 
 ```json
-http://localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://example.com
+http://username:password@localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://example.com
 ```
 
 **Parameter:**
 
 | 参数            | 说明                         |
 | ------------- | -------------------------- |
+| username      | 用户名，必填项                    |
+| password      | 密码，必填项                     |
 | response_type | 表示响应类型，此处的值固定为"token"，必选项。 |
 | client_id     | 表示客户端的ID，必选项。              |
 | redirect_uri  | 表示重定向的URI，可选项。             |
@@ -274,13 +278,15 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=0843fbec-20e3-4802-93a0-357488403924&client_id=myClientId&client_secret=myClientSecret
+http://username:password@localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=0843fbec-20e3-4802-93a0-357488403924&client_id=myClientId&client_secret=myClientSecret
 ```
 
 **Parameter:**
 
 | 参数            | 说明                                |
 | ------------- | --------------------------------- |
+| username      | 用户名，必填项                           |
+| password      | 密码，必填项                            |
 | client_id     | 客户端ID，必填项                         |
 | client_secret | 客户端密钥，必填项                         |
 | grant_type    | 表示授权类型，必选项，此处的值固定为"refresh_token" |
