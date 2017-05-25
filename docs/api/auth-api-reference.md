@@ -236,7 +236,7 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=client_credentials&&scope=read write
+http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=client_credentials&scope=read write
 ```
 
 **Parameter:**

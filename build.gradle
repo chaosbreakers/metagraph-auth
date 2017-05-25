@@ -41,5 +41,9 @@ dependencies {
     runtime("mysql:mysql-connector-java")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile('io.vertx:vertx-web-client:3.4.1')
+    //vertx-test
+    compile "io.vertx:vertx-core:3.4.1"
+    compile('io.vertx:vertx-web-client:3.4.1')
+    compile 'io.vertx:vertx-unit:3.4.1'
+
 }
