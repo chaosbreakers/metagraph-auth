@@ -104,7 +104,7 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://username:password@localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
+http://username:password@localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
 ```
 
 **Parameter:**
