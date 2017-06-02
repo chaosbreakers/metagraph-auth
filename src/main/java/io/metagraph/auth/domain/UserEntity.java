@@ -3,52 +3,55 @@ package io.metagraph.auth.domain;
 import javax.persistence.*;
 
 
-//@Entity
-//@Table(name = "users" ,schema = "metagraph" ,catalog = "")
+/**
+ *  users实体类定义
+ * @author ZhaoPeng
+ */
+@Entity
+@Table(name = "users" ,schema = "" ,catalog = "")
 public class UserEntity {
-    private int id;
-    private String username;
-    private String password;
-    private int enable;
 
     @Id
-    @Column(name = "id")
+    private int id;
+
+    private String username;
+
+    private String password;
+
+    private int enabled;
+
+
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "username")
+
     public String getUsername() {
         return username;
     }
 
-    public void setName(String name) {
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    @Basic
-    @Column(name = "enable")
-    public Integer getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Integer age) {
-        this.enable = age;
-    }
-
-
-    @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
     }
 }
