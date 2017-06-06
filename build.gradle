@@ -1,6 +1,8 @@
 group 'io.metagraph.auth'
 version '1.0.0-SNAPSHOT'
 
+ext.vertx_version = "3.4.1"
+
 buildscript {
     repositories {
         mavenLocal()
@@ -41,9 +43,11 @@ dependencies {
     runtime("mysql:mysql-connector-java")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+
     //vertx-test
-    compile "io.vertx:vertx-core:3.4.1"
-    compile('io.vertx:vertx-web-client:3.4.1')
-    compile 'io.vertx:vertx-unit:3.4.1'
+    testCompile("io.vertx:vertx-core:$vertx_version")
+    testCompile("io.vertx:vertx-web-client:$vertx_version")
+    testCompile("io.vertx:vertx-unit:$vertx_version")
+    testCompile("io.vertx:vertx-auth-oauth2:$vertx_version")
 
 }
