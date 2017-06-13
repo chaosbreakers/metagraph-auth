@@ -1,6 +1,8 @@
 package io.metagraph.auth.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 /**
@@ -9,28 +11,22 @@ import javax.persistence.*;
  * @author ZhaoPeng
  */
 @Entity
-@Table(name = "users", schema = "", catalog = "")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
     private int id;
-
     private String username;
-
     private String password;
-
-    private int enabled;
-
+    private boolean enabled;
 
     public int getId() {
         return id;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getUsername() {
         return username;
@@ -48,11 +44,31 @@ public class UserEntity {
         this.password = password;
     }
 
-    public int getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        UserEntity that = (UserEntity) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
 }
