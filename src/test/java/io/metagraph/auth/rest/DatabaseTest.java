@@ -21,6 +21,6 @@ public class DatabaseTest extends OAuth2Test {
     @Test
     public void testAuthorizationCode() throws IOException, URISyntaxException {
         UserEntity user = userDao.findByUsername("admin");
-        assertEquals(user.getUsername(),"admin");
+        assertEquals(user.getUsername(), "admin");
     }
 }

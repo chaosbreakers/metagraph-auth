@@ -4,11 +4,12 @@ import javax.persistence.*;
 
 
 /**
- *  users实体类定义
+ * users实体类定义
+ *
  * @author ZhaoPeng
  */
 @Entity
-@Table(name = "users" ,schema = "" ,catalog = "")
+@Table(name = "users", schema = "", catalog = "")
 public class UserEntity {
 
     @Id

@@ -22,7 +22,7 @@ import javax.sql.DataSource;
  */
 @EnableResourceServer
 @Configuration
-public class ResourceServerConfigurer extends  ResourceServerConfigurerAdapter{
+public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
 
     private static final String RESOURCE_ID = "oauth2-resource";
 
@@ -35,7 +35,7 @@ public class ResourceServerConfigurer extends  ResourceServerConfigurerAdapter{
     private TokenExtractor tokenExtractor = new BearerTokenExtractor();
 
     @Bean
-   TokenStore tokenStore(DataSource dataSource) {
+    TokenStore tokenStore(DataSource dataSource) {
         return new JdbcTokenStore(dataSource);
     }
 
@@ -46,7 +46,7 @@ public class ResourceServerConfigurer extends  ResourceServerConfigurerAdapter{
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-       http
+        http
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()

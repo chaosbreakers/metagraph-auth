@@ -6,7 +6,7 @@ import org.springframework.util.Base64Utils;
 import java.nio.charset.Charset;
 
 /**
- * @author  ZhaoPeng 2017-05-10
+ * @author ZhaoPeng
  */
 public class AuthorizationUtil {
     private static final Charset UTF_8 = Charset.forName("UTF-8");

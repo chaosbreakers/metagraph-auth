@@ -22,8 +22,8 @@ public class AuthorizationCodeTest extends OAuth2Test {
     public void testAuthorizationCode() throws IOException, URISyntaxException {
         String authUrl = authBasicUrlPrefix + "/oauth/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectUrl + "&scope=read write";
         HttpHeaders headers1 = null;
-        headers1   =    AuthorizationUtil.basic("admin","admin");
-        ResponseEntity<String> response = new TestRestTemplate().postForEntity(authUrl,new HttpEntity<>(headers1), null, String.class);
+        headers1 = AuthorizationUtil.basic("admin", "admin");
+        ResponseEntity<String> response = new TestRestTemplate().postForEntity(authUrl, new HttpEntity<>(headers1), null, String.class);
 
         assertEquals(response.getBody(), HttpStatus.OK, response.getStatusCode());
         HttpHeaders headers = new HttpHeaders();

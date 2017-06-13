@@ -22,10 +22,10 @@ public class ImplicitTest extends OAuth2Test {
     public void testImplicit() throws IOException {
         unauthorizedRequest();
 
-        String authUrl = authBasicUrlPrefix + "/oauth/authorize?response_type=token&client_id="+clientId+"&redirect_uri="+resourceUrl;
+        String authUrl = authBasicUrlPrefix + "/oauth/authorize?response_type=token&client_id=" + clientId + "&redirect_uri=" + resourceUrl;
         HttpHeaders headers1 = null;
-        headers1   =    AuthorizationUtil.basic("admin","admin");
-        ResponseEntity<String> response = new TestRestTemplate().postForEntity(authUrl,new HttpEntity<>(headers1), null, String.class);
+        headers1 = AuthorizationUtil.basic("admin", "admin");
+        ResponseEntity<String> response = new TestRestTemplate().postForEntity(authUrl, new HttpEntity<>(headers1), null, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         String cookieValue = response.getHeaders().get("Set-Cookie").get(0).split(";")[0];

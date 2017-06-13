@@ -57,7 +57,7 @@ public class VertxWebTest {
                 HttpResponse<Buffer> response = ar.result();
                 //String location = response.getHeader("Location");
                 String body = response.bodyAsString();
-                System.out.println("Implicit Mode Get Token" + body + " status code" + response.statusCode()+" Location=");
+                System.out.println("Implicit Mode Get Token" + body + " status code" + response.statusCode() + " Location=");
             } else {
                 System.out.println("Something went wrong " + ar.cause().getMessage());
             }

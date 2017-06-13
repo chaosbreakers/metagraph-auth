@@ -19,8 +19,7 @@ public class PasswordTest extends OAuth2Test {
         String tokenUrl = authUrlPrefix + "/oauth/token?client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=password&username=" + username + "&password=" + password;
         HttpHeaders headers1 = null;
         //headers1   =    AuthorizationUtil.basic("admin","admin");
-
-        ResponseEntity<String> response = new TestRestTemplate().postForEntity(tokenUrl,null, String.class);
+        ResponseEntity<String> response = new TestRestTemplate().postForEntity(tokenUrl, null, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         HashMap map = new ObjectMapper().readValue(response.getBody(), HashMap.class);
         String accessToken = (String) map.get("access_token");

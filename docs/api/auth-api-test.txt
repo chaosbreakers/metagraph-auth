@@ -1,7 +1,7 @@
 -- Password API
 http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=password&username=admin&password=admin
 
-//curl获取
+//curl鑾峰彇
 curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "grant_type=password&scope=read%20write&client_id=myClientId&client_secret=myClientSecret&username=admin&password=admin"
 
 
@@ -9,7 +9,7 @@ curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d 
 -- Client Credentials API
 http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=client_credentials&&scope=read%20write
 
-//curl获取
+//curl鑾峰彇
 curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "grant_type=client_credentials&scope=read%20write&client_id=myClientId&client_secret=myClientSecret"
 
 
@@ -23,7 +23,7 @@ http://localhost:8080/oauth/authorize?client_id=myClientId&redirect_uri=http://l
 http://admin:admin@localhost:8080/oauth/token?client_id=myClientId&&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=kjsmMK
 
 
-curl获取
+curl鑾峰彇
 curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "client_id=myClientId&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=osfU69"
 
 
@@ -36,6 +36,5 @@ http://localhost:8080/oauth/authorize?response_type=token&scope=read write&clien
 refresh_token
 http://admin:admin@localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=4c8f7938-7ecb-45ac-b649-7c87f9a01dca&client_id=myClientId&client_secret=myClientSecret
 
---curl写法
+--curl鍐欐硶
 curl -X POST http://localhost:8080/oauth/token -H "Accept: application/json" -d "grant_type=refresh_token&refresh_token=4c8f7938-7ecb-45ac-b649-7c87f9a01dca&client_id=myClientId&client_secret=myClientSecret"
-
