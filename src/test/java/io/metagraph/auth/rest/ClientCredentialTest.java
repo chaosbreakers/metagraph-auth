@@ -21,7 +21,7 @@ public class ClientCredentialTest extends OAuth2Test {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         HashMap map = new ObjectMapper().readValue(response.getBody(), HashMap.class);
         String accessToken = (String) map.get("access_token");
-        String refreshToken = (String) map.get("refresh_token");
+        String refreshToken  = (String) map.get("refresh_token");
         System.out.println("Token Info:" + map.toString());
     }
 }

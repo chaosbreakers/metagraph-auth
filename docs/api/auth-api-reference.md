@@ -51,7 +51,139 @@ UTF-8
 
 
 
-## 2. Authorization Code API
+
+
+## 2. Password API
+
+> Password API（密码模式）：客户端通过用户名和密码访问授权服务器获取token。常用于那些比较信任的服务，比如团队内的项目。
+
+**Endpoint:** 
+
+POST: /oauth/token
+
+**Request：**
+
+```json
+http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=password&username=admin&password=admin
+```
+
+**Parameter:**
+
+| 参数            | 说明                           |
+| ------------- | ---------------------------- |
+| client_id     | 客户端ID，必填项                    |
+| client_secret | 客户端密钥，必填项                    |
+| username      | 用户名，必填项                      |
+| password      | 密码，必填项                       |
+| grant_type    | 表示授权类型，必选项，此处的值固定为"password" |
+| scope         | 表示权限范围，可选项，空格分隔              |
+
+**Response:**
+
+```json
+{
+  "access_token": "3a94d35d-e3fe-4426-ba4e-8774d8cdf0fe",
+  "token_type": "bearer",
+  "refresh_token": "4c8f7938-7ecb-45ac-b649-7c87f9a01dca",
+  "expires_in": 1455,
+  "scope": "read write"
+}
+```
+
+| 结果            | 说明                                    |
+| ------------- | ------------------------------------- |
+| access_token  | 表示访问令牌，必选项。                           |
+| token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型 |
+| refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。              |
+| expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。     |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔       |
+
+## 3. Client Credentials API
+
+> Client Credentials API（客户端模式）：客户端通过client_id和client_secret访问授权服务器获取token，主要用于应用api访问
+
+**Endpoint:** 
+
+POST: /oauth/token
+
+**Request：**
+
+```json
+http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=client_credentials&scope=read write
+```
+
+**Parameter:**
+
+| 参数            | 说明                                     |
+| ------------- | -------------------------------------- |
+| client_id     | 客户端ID，必填项                              |
+| client_secret | 客户端密钥，必填项                              |
+| grant_type    | 表示授权类型，必选项，此处的值固定为"client_credentials" |
+| scope         | 表示权限范围，可选项，空格分隔                        |
+
+**Response:**
+
+```json
+{
+  "access_token": "d525bbd8-2aa8-402c-a4dc-b23992128801",
+  "token_type": "bearer",
+  "refresh_token": "ec64084b-11c1-4888-83d0-1c6e8c2f9e51",
+  "expires_in": 1799,
+  "scope": "read write"
+}
+```
+| 结果            | 说明                                       |
+| ------------- | ---------------------------------------- |
+| access_token  | 表示访问令牌，必选项。                              |
+| token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型，MAC类型相对于BEARER类型对于用户资源请求的区别在于，BEARER类型只需要携带授权服务器下发的token即可，而对于MAC类型来说，除了携带授权服务器下发的token，客户端还要携带时间戳，nonce，以及在客户端计算得到的mac值等信息，并通过这些额外的信息来保证传输的可靠性。 |
+| refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。                 |
+| expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔          |
+
+
+
+## 4. Implicit API
+
+> Implicit API(简化模式)：客户端将用户导向认证服务器，返回授权界面，用户授权客户端后，认证服务器将用户导向客户端指定的"重定向URI"，并在URI中包含了访问令牌。常用于移动设备上。
+
+**Endpoint:** 
+
+POST: /oauth/authorize
+
+**Request：**
+
+```json
+Headers：
+Authorization：Basic YWRtaW46YWRtaW4=
+
+http://localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://localhost:8080/secure
+```
+
+**Parameter:**
+
+| 参数            | 说明                              |
+| ------------- | ------------------------------- |
+| Authorization | Basic 用户名和密码的base64加密字符串        |
+| response_type | 表示响应类型，此处的值固定为"token"，必选项。      |
+| client_id     | 表示客户端的ID，必选项。                   |
+| redirect_uri  | 表示重定向的URI，可选项。                  |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔 |
+
+**Response:**
+
+```json
+Headers：
+
+http://localhost:8080/secure#access_token=93ad053b-97cf-4678-8d46-3f39d1864403&token_type=bearer&expires_in=483
+```
+
+| 结果           | 说明                                    |
+| ------------ | ------------------------------------- |
+| access_token | 表示访问令牌，必选项。                           |
+| token_type   | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型 |
+| expires_in   | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。     |
+
+## 5. Authorization Code API
 
 > Authorization Code API(授权码模式)，常用于服务端
 
@@ -66,26 +198,28 @@ POST: /oauth/authorize
 **Request：**
 
 ```json
-http://username:password@localhost:8080/oauth/authorize?client_id=myClientId&redirect_uri=http://example.com&response_type=code&scope=read write
+Headers：
+Authorization：Basic YWRtaW46YWRtaW4=
+
+http://localhost:8080/oauth/authorize?client_id=myClientId&redirect_uri=http://localhost:8080/secure&response_type=code&scope=read write
 ```
 
 **Parameter:**
 
-| 参数            | 说明                          |
-| ------------- | --------------------------- |
-| username      | 用户名，必填项                     |
-| password      | 密码，必填项                      |
-| response_type | 表示响应类型，此处的值固定为"code"，必选项。   |
-| client_id     | 表示客户端的ID，必选项。               |
-| redirect_uri  | 表示重定向的URI，可选项。              |
-| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。 |
+| 参数            | 说明                              |
+| ------------- | ------------------------------- |
+| Authorization | Basic 用户名和密码的base64加密字符串        |
+| response_type | 表示响应类型，此处的值固定为"code"，必选项。       |
+| client_id     | 表示客户端的ID，必选项。                   |
+| redirect_uri  | 表示重定向的URI，可选项。                  |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔 |
 
 **Response:**
 
 ```json
 Headers：
 
-Location:http://example.com?code=8wWZTJ
+Location:http://localhost:8080/secure?code=wHcmDs
 ```
 
 | 结果       | 说明     |
@@ -104,15 +238,13 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://username:password@localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://example.com&code=915hR2
+http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=authorization_code&redirect_uri=http://localhost:8080/secure?code=wHcmDs
 ```
 
 **Parameter:**
 
 | 参数            | 说明                                      |
 | ------------- | --------------------------------------- |
-| username      | 用户名，必填项                                 |
-| password      | 密码，必填项                                  |
 | client_id     | 客户端ID，必填项                               |
 | client_secret | 客户端密钥，必填项                               |
 | grant_type    | 表示授权类型，此处的值固定为"authorization_code"，必选项。 |
@@ -137,135 +269,9 @@ http://username:password@localhost:8080/oauth/token?client_id=myClientId&client_
 | token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型，MAC类型相对于BEARER类型对于用户资源请求的区别在于，BEARER类型只需要携带授权服务器下发的token即可，而对于MAC类型来说，除了携带授权服务器下发的token，客户端还要携带时间戳，nonce，以及在客户端计算得到的mac值等信息，并通过这些额外的信息来保证传输的可靠性。 |
 | refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。                 |
 | expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
-| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。              |
-
-## 3. Implicit API
-
-> Implicit API(简化模式)：客户端将用户导向认证服务器，返回授权界面，用户授权客户端后，认证服务器将用户导向客户端指定的"重定向URI"，并在URI中包含了访问令牌。常用于移动设备上。
-
-**Endpoint:** 
-
-POST: /oauth/authorize
-
-**Request：**
-
-```json
-http://username:password@localhost:8080/oauth/authorize?response_type=token&scope=read write&client_id=myClientId&redirect_uri=http://example.com
-```
-
-**Parameter:**
-
-| 参数            | 说明                         |
-| ------------- | -------------------------- |
-| username      | 用户名，必填项                    |
-| password      | 密码，必填项                     |
-| response_type | 表示响应类型，此处的值固定为"token"，必选项。 |
-| client_id     | 表示客户端的ID，必选项。              |
-| redirect_uri  | 表示重定向的URI，可选项。             |
-| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略 |
-
-**Response:**
-
-```json
-Headers：
-
-Location:http://example.com#access_token=7c48f026-37d5-47e8-b45d-0ec7a4e30abc&token_type=bearer&expires_in=1028
-```
-
-| 结果           | 说明                                    |
-| ------------ | ------------------------------------- |
-| access_token | 表示访问令牌，必选项。                           |
-| token_type   | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型 |
-| expires_in   | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。     |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔          |
 
 
-
-## 4. Password API
-
-> Password API（密码模式）：客户端通过用户名和密码访问授权服务器获取token。常用于那些比较信任的服务，比如团队内的项目。
-
-**Endpoint:** 
-
-POST: /oauth/token
-
-**Request：**
-
-```json
-http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=password&username=admin&password=admin
-```
-
-**Parameter:**
-
-| 参数            | 说明                           |
-| ------------- | ---------------------------- |
-| client_id     | 客户端ID，必填项                    |
-| client_secret | 客户端密钥，必填项                    |
-| username      | 用户名，必填项                      |
-| password      | 密码，必填项                       |
-| grant_type    | 表示授权类型，必选项，此处的值固定为"password" |
-| scope         | 表示权限范围，可选项。                  |
-
-**Response:**
-
-```json
-{
-  "access_token": "3a94d35d-e3fe-4426-ba4e-8774d8cdf0fe",
-  "token_type": "bearer",
-  "refresh_token": "4c8f7938-7ecb-45ac-b649-7c87f9a01dca",
-  "expires_in": 1455,
-  "scope": "read write"
-}
-```
-
-| 结果            | 说明                                    |
-| ------------- | ------------------------------------- |
-| access_token  | 表示访问令牌，必选项。                           |
-| token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型 |
-| refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。              |
-| expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。     |
-| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。           |
-
-## 5. Client Credentials API
-
-> Client Credentials API（客户端模式）：客户端通过client_id和client_secret访问授权服务器获取token，主要用于应用api访问
-
-**Endpoint:** 
-
-POST: /oauth/token
-
-**Request：**
-
-```json
-http://localhost:8080/oauth/token?client_id=myClientId&client_secret=myClientSecret&grant_type=client_credentials&scope=read write
-```
-
-**Parameter:**
-
-| 参数            | 说明                                     |
-| ------------- | -------------------------------------- |
-| client_id     | 客户端ID，必填项                              |
-| client_secret | 客户端密钥，必填项                              |
-| grant_type    | 表示授权类型，必选项，此处的值固定为"client_credentials" |
-| scope         | 表示权限范围，可选项。                            |
-
-**Response:**
-
-```json
-{
-  "access_token": "d525bbd8-2aa8-402c-a4dc-b23992128801",
-  "token_type": "bearer",
-  "refresh_token": "ec64084b-11c1-4888-83d0-1c6e8c2f9e51",
-  "expires_in": 1799,
-  "scope": "read write"
-}
-```
-| 结果            | 说明                                       |
-| ------------- | ---------------------------------------- |
-| access_token  | 表示访问令牌，必选项。                              |
-| token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型，MAC类型相对于BEARER类型对于用户资源请求的区别在于，BEARER类型只需要携带授权服务器下发的token即可，而对于MAC类型来说，除了携带授权服务器下发的token，客户端还要携带时间戳，nonce，以及在客户端计算得到的mac值等信息，并通过这些额外的信息来保证传输的可靠性。 |
-| refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。                 |
-| expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
-| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。              |
 
 ## 5. Refresh Token API
 
@@ -310,4 +316,4 @@ http://username:password@localhost:8080/oauth/token?grant_type=refresh_token&ref
 | token_type    | 表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型，MAC类型相对于BEARER类型对于用户资源请求的区别在于，BEARER类型只需要携带授权服务器下发的token即可，而对于MAC类型来说，除了携带授权服务器下发的token，客户端还要携带时间戳，nonce，以及在客户端计算得到的mac值等信息，并通过这些额外的信息来保证传输的可靠性。 |
 | refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。                 |
 | expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
-| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。              |
+| scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔          |

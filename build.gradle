@@ -2,6 +2,9 @@ group 'io.metagraph.auth'
 version '1.0.0-SNAPSHOT'
 
 buildscript {
+    ext {
+        vertxVersion = '3.4.1'
+    }
     repositories {
         mavenLocal()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
@@ -42,8 +45,8 @@ dependencies {
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     //vertx-test
-    compile "io.vertx:vertx-core:3.4.1"
-    compile('io.vertx:vertx-web-client:3.4.1')
-    compile 'io.vertx:vertx-unit:3.4.1'
+    compile("io.vertx:vertx-core:${vertxVersion}")
+    compile("io.vertx:vertx-web-client:${vertxVersion}")
+    compile("io.vertx:vertx-unit:${vertxVersion}")
 
 }

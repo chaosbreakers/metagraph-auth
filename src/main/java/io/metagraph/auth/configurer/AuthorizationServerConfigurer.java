@@ -2,7 +2,9 @@ package io.metagraph.auth.configurer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -107,6 +109,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     }
 
     @Bean
+    @Primary
     public AuthorizationServerTokenServices tokenServices() {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setSupportRefreshToken(true);
@@ -114,6 +117,15 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
         tokenServices.setClientDetailsService(clientDetailsService());
         return tokenServices;
     }
+
+    /*@Bean
+    @Primary
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setSupportRefreshToken(true);
+        return defaultTokenServices;
+    }*/
 
     private List<TokenGranter> getCustomizedTokenGranters() {
         AuthorizationServerTokenServices tokenServices = tokenServices();

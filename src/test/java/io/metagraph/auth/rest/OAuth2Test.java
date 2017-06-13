@@ -22,6 +22,9 @@ public class OAuth2Test extends BaseTest {
     @Value("${server.auth.redirectUrl}")
     protected String redirectUrl;
 
+    @Value("${server.auth.resourceUrl}")
+    protected String resourceUrl;
+
     @Value("${server.auth.username}")
     protected String username;
 
@@ -40,8 +43,8 @@ public class OAuth2Test extends BaseTest {
     }
 
     protected void unauthorizedRequest() {
-        /*ResponseEntity<String> response = new TestRestTemplate().getForEntity(redirectUrl, String.class);
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());*/
+        ResponseEntity<String> response = new TestRestTemplate().getForEntity(redirectUrl, String.class);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 
     protected void refreshToken(String refreshToken) {
