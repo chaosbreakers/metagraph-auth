@@ -1,6 +1,6 @@
 package io.metagraph.auth.dao;
 
-import io.metagraph.auth.domain.UserEntity;
+import io.metagraph.auth.domain.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -11,5 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface UserDao extends JpaRepository<UserEntity, Integer> {
+
+    UserEntity findById(Integer id);
+
     UserEntity findByUsername(String username);
+
 }

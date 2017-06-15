@@ -65,6 +65,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         //to create SecurityFilterChain instances
         web
                 .ignoring()
+                .antMatchers("/user/**")
                 .antMatchers("/druid/**")
                 .antMatchers("/register")
                 .antMatchers("/activate")

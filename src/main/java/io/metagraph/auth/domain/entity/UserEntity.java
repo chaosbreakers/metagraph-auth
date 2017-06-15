@@ -1,8 +1,12 @@
-package io.metagraph.auth.domain;
+package io.metagraph.auth.domain.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 
 /**
@@ -16,9 +20,17 @@ public class UserEntity {
 
     @Id
     private int id;
+
     private String username;
+
+    @JSONField(serialize = false)
     private String password;
+
     private boolean enabled;
+
+    @JSONField(serialize = false)
+    @Column(name = "create_time")
+    private Date createTime;
 
     public int getId() {
         return id;
@@ -50,6 +62,14 @@ public class UserEntity {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override

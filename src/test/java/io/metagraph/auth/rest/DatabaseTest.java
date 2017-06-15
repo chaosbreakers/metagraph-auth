@@ -1,7 +1,7 @@
 package io.metagraph.auth.rest;
 
-import io.metagraph.auth.dao.UserDao;
-import io.metagraph.auth.domain.UserEntity;
+import io.metagraph.auth.domain.entity.UserEntity;
+import io.metagraph.auth.service.IUserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,11 +16,14 @@ import static org.junit.Assert.assertEquals;
 public class DatabaseTest extends OAuth2Test {
 
     @Autowired
-    UserDao userDao;
+    IUserService iUserService;
 
     @Test
-    public void testAuthorizationCode() throws IOException, URISyntaxException {
-        UserEntity user = userDao.findByUsername("admin");
+    public void testUserRest() throws IOException, URISyntaxException {
+        UserEntity user = iUserService.findByUsername("admin");
+        assertEquals(user.getUsername(), "admin");
+
+        UserEntity user1 = iUserService.findUserById(18);
         assertEquals(user.getUsername(), "admin");
     }
 }

@@ -5,6 +5,7 @@ buildscript {
     ext {
         vertxVersion = '3.4.1'
         druidVersion = '1.0.31'
+        fastjsonVersion = '1.2.33'
     }
     repositories {
         mavenLocal()
@@ -41,6 +42,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.security.oauth:spring-security-oauth2")
     compile("com.alibaba:druid:${druidVersion}")
+    compile("com.alibaba:fastjson:${fastjsonVersion}")
     runtime("mysql:mysql-connector-java")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
@@ -49,6 +51,6 @@ dependencies {
     testCompile("io.vertx:vertx-core:${vertxVersion}")
     testCompile("io.vertx:vertx-web-client:${vertxVersion}")
     testCompile("io.vertx:vertx-unit:${vertxVersion}")
-    //testCompile("io.vertx:vertx-auth-oauth2:$vertxVersion")
+    testCompile("io.vertx:vertx-auth-oauth2:${vertxVersion}")
 
 }

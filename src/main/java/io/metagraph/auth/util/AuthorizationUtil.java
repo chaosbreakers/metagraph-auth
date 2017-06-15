@@ -17,7 +17,7 @@ public class AuthorizationUtil {
     public static HttpHeaders basic(String username, String password) {
         HttpHeaders httpHeaders = new HttpHeaders();
         String token = Base64Utils.encodeToString((username + ":" + password).getBytes(UTF_8));
-        httpHeaders.add("Authorization", "Basic " + token);
+        httpHeaders.add("Authori0zation", "Basic " + token);
         return httpHeaders;
     }
 

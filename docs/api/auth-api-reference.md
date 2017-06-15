@@ -284,15 +284,13 @@ POST: /oauth/token
 **Request：**
 
 ```json
-http://username:password@localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=0843fbec-20e3-4802-93a0-357488403924&client_id=myClientId&client_secret=myClientSecret
+http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=0843fbec-20e3-4802-93a0-357488403924&client_id=myClientId&client_secret=myClientSecret
 ```
 
 **Parameter:**
 
 | 参数            | 说明                                |
 | ------------- | --------------------------------- |
-| username      | 用户名，必填项                           |
-| password      | 密码，必填项                            |
 | client_id     | 客户端ID，必填项                         |
 | client_secret | 客户端密钥，必填项                         |
 | grant_type    | 表示授权类型，必选项，此处的值固定为"refresh_token" |
@@ -317,3 +315,37 @@ http://username:password@localhost:8080/oauth/token?grant_type=refresh_token&ref
 | refresh_token | 表示更新令牌，用来获取下一次的访问令牌，可选项。                 |
 | expires_in    | 表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。        |
 | scope         | 表示权限范围，如果与客户端申请的范围一致，此项可省略。空格分隔          |
+
+
+
+## 6. Verify Token API
+
+> Verify Token API（验证令牌接口）：用于验证token是否有效
+
+**Endpoint:** 
+
+GET: /verifyToken
+
+**Request：**
+
+```json
+http://localhost:8080/verifyToken?access_token=0843fbec-20e3-4802-93a0-357488403924
+```
+
+**Parameter:**
+
+| 参数          | 说明          |
+| ----------- | ----------- |
+| verifyToken | 表示访问令牌，必选项。 |
+
+**Response:**
+
+```json
+{
+  "tokenValid": "true"
+}
+```
+
+| 结果         | 说明               |
+| ---------- | ---------------- |
+| tokenValid | 表示令牌有效性，true表示有效 |
